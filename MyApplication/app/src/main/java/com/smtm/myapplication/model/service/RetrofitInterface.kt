@@ -14,7 +14,7 @@ interface RetrofitInterface {
     /*
     * 검색(json data)
     */
-    @GET("search/repositories?sort=stars&order=desc&page=1&per_page=10")
+    @GET("search/repositories?sort=stars&order=desc")
     fun getRepoList(
         @Query("q") query: String
     ): Single<GithubResponseModel>
