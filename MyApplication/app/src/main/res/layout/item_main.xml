@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto" android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content" android:gravity="center" android:layout_marginTop="4dp"
+              android:layout_marginBottom="4dp">
+
+    <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="64dp"
+            android:layout_margin="8dp">
+
+        <ImageView
+                android:id="@+id/repo_image_view"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_margin="8dp"/>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/repo_image_view"
+                android:orientation="vertical"
+                android:gravity="center_vertical">
+            <TextView
+                    android:id="@+id/repo_name"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="8sp"
+                    android:textAppearance="@android:style/TextAppearance.Large"/>
+
+            <TextView
+                    android:id="@+id/repo_detail"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:maxLines="20"
+                    android:textSize="8sp"
+                    android:textAppearance="@android:style/TextAppearance"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+</LinearLayout>
