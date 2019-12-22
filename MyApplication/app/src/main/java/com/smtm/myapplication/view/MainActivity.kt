@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+
 class MainActivity : BaseKotlinActivity<com.smtm.myapplication.databinding.ActivityMainBinding, MainViewModel>() {
     override val layoutResourceId: Int
         get() = R.layout.activity_main
@@ -21,9 +22,9 @@ class MainActivity : BaseKotlinActivity<com.smtm.myapplication.databinding.Activ
 
     private val mainSearchRecyclerViewAdapter: MainSearchRecyclerViewAdapter by inject()
 
-
+    private var currentPage = 1
     private val TAG = "MainActivity"
-
+    var infiniteScrollListener: InfiniteScrollListener? = null
 
 
     override fun initStartView() {
@@ -31,6 +32,10 @@ class MainActivity : BaseKotlinActivity<com.smtm.myapplication.databinding.Activ
         main_activity_search_recycler_view.run {
             adapter = mainSearchRecyclerViewAdapter
             layoutManager = LinearLayoutManager(this@MainActivity);
+            clearOnScrollListeners() // (2)
+            infiniteScrollListener = InfiniteScrollListener({ requestMovie() }, layoutManager as LinearLayoutManager)
+
+            addOnScrollListener(infiniteScrollListener!!)
             setHasFixedSize(false)
         }
     }
@@ -49,14 +54,20 @@ class MainActivity : BaseKotlinActivity<com.smtm.myapplication.databinding.Activ
     override fun initAfterBinding() {
         main_activity_search_button.setOnClickListener {
             Log.e(TAG,"main_activity_search_button setOnClickListener")
+            infiniteScrollListener?.resetState()
+            currentPage = 1;
             mainSearchRecyclerViewAdapter.clearItem()
-            viewModel.getSearch(main_activity_search_text_view.text.toString())
+            viewModel.getSearch(main_activity_search_text_view.text.toString(), currentPage, 10)
             dismissKeyboard(it.windowToken)
         }
 
 
     }
 
+    private fun requestMovie() {
+        Log.e(TAG, "requestMovie()")
+        viewModel.getSearch(main_activity_search_text_view.text.toString(), ++currentPage, 10)
+    }
 
     private fun dismissKeyboard(windowToken: IBinder) {
         val imm = this?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager

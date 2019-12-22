@@ -19,8 +19,8 @@ class MainViewModel(private val model: DataModel) : BaseKotlinViewModel() {
     val searchResponseLiveData:LiveData<GithubResponseModel>
         get() =  _searchResponseLiveData
 
-    fun getSearch(query: String) {
-        addDisposable(model.getData(query)
+    fun getSearch(query: String, page:Int, per_page:Int) {
+        addDisposable(model.getData(query, page, per_page)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
